@@ -14,12 +14,14 @@ var	parseDate = d3.isoParse
 
 // set up the svg on the page
 var svg = d3.select("#container").append("svg")
-    .attr("width", width + margin.left + margin.right) //600
-    .attr("height", height + margin.top + margin.bottom)  //300
+    .attr("width", width + margin.left + margin.right) //900
+    .attr("height", height + margin.top + margin.bottom)  //500
+    // .attr("viewBox", "0 0 900 500")
+    // .attr("preserveAspectRatio","xMidYMid meet" )
+    .attr("id","mychart")
   .append("g")
     .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")"); // 40,20
-
+          "translate(" + margin.left + "," + margin.top + ")"); // 80,20
 
 
 // get the data from the json api url
@@ -30,6 +32,34 @@ d3.json(url, function(error, data) {
   // set up the ranges of x and y
   var x = d3.scaleTime().range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
+
+  // gridlines in x axis function
+  function make_x_gridlines() {
+      return d3.axisBottom(x)
+          .ticks(5)
+  }
+  // gridlines in y axis function
+  function make_y_gridlines() {
+      return d3.axisLeft(y)
+          .ticks(5)
+  }
+
+  // add the X gridlines
+  svg.append("g")
+      .attr("class", "grid")
+      .attr("transform", "translate(0," + height + ")")
+      .call(make_x_gridlines()
+          .tickSize(-height)
+          .tickFormat("")
+      );
+
+  // add the Y gridlines
+  svg.append("g")
+      .attr("class", "grid")
+      .call(make_y_gridlines()
+          .tickSize(-width)
+          .tickFormat("")
+      );
 
   //get the min and max dates for the domain
   var max = d3.max(data.data, (d) => { return new Date(Date.parse(d[0])); });
@@ -120,7 +150,7 @@ var formatTime = d3.timeFormat("%Y %B");
             div.transition()
                 .duration(200)
                 .style("opacity", .9);
-            div	.html("<span id = 'tipgdp'>" + formatTime(Date.parse(d[0])) +"</span>" + "<br/>"  + "GDP :$" +d[1])
+            div	.html("<span id = 'tipgdp'>" + formatTime(Date.parse(d[0])) +"</span>" + "<br/>"  + "GDP: $" +d[1])
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
             })

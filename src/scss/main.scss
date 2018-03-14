@@ -2,18 +2,29 @@
 @import 'utilities';
 
 body {
-   background-image: url('http://dbwebworks.ie/sites/default/files/freecodecamp/images/worn_dots.png');
+  // background-image: url('http://dbwebworks.ie/sites/default/files/freecodecamp/images/worn_dots.png');
+  background-color: #F5F0F6;
   color: $color-text;
   font-family: 'Roboto', sans-serif;
   font-weight: 600;
 }
+svg {
+  background-image: url('http://dbwebworks.ie/sites/default/files/freecodecamp/images/worn_dots.png');
+  display: block;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 #ytext {
   font-weight: 800;
 }
 
+
 #chart-title {
   font-size: 30px;
+  color: white;
 }
 #description {
   font-size: 10px;
@@ -35,4 +46,14 @@ div.tooltip {
 
 #tipgdp {
   font-weight: bolder;
+}
+
+.grid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.6;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
+  stroke-width: 0;
 }
